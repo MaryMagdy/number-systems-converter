@@ -1,7 +1,20 @@
 {
+  "name": "number-systems-server",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "...",
+    "cors": "...",
+    "body-parser": "...",
+    "mongoose": "..."
+  },
   "devDependencies": {
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.13"
+    "nodemon": "...",
+    "jest": "..."
   }
 }
