@@ -8,13 +8,13 @@
     "test": "jest"
   },
   "dependencies": {
-    "express": "...",
-    "cors": "...",
     "body-parser": "...",
-    "mongoose": "..."
+    "cors": "...",
+    "express": "...",
+    "mongoose": "file:..."
   },
   "devDependencies": {
-    "nodemon": "...",
-    "jest": "..."
+    "jest": "...",
+    "nodemon": "..."
   }
 }
