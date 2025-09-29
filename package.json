@@ -8,13 +8,29 @@
     "test": "jest"
   },
   "dependencies": {
-    "express": "...",
-    "cors": "...",
     "body-parser": "...",
-    "mongoose": "..."
+    "cors": "...",
+    "express": "...",
+    "mongoose": "file:..."
   },
   "devDependencies": {
-    "nodemon": "...",
-    "jest": "..."
-  }
+    "jest": "...",
+    "nodemon": "..."
+  },
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaryMagdy/number-systems-converter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaryMagdy/number-systems-converter/issues"
+  },
+  "homepage": "https://github.com/MaryMagdy/number-systems-converter#readme"
 }
