@@ -1,65 +1,73 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import axios from "axios";
 
-function App() {
-  const [count, setCount] = useState(0)
-  const [darkMode, setDarkMode] = useState(false)
-
-  // Add/remove dark class on <html>
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-    }
-  }, [darkMode])
-
-  return (
-    <div className="bg-white dark:bg-gray-900 min-h-screen flex flex-col items-center justify-center text-center">
-      {/* Logos */}
-      <div className="flex gap-6 mb-6">
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-
-      {/* Title */}
-      <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-        Vite + React
-      </h1>
-
-      {/* Counter Card */}
-      <div className="card bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md">
-        <button
-          onClick={() => setCount((count) => count + 1)}
-          className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
-        >
-          count is {count}
-        </button>
-        <p className="text-gray-700 dark:text-gray-300 mt-4">
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-
-      {/* Docs link */}
-      <p className="read-the-docs text-gray-600 dark:text-gray-400 mt-6">
-        Click on the Vite and React logos to learn more
-      </p>
-
-      {/* Dark Mode Toggle */}
-      <button
-        onClick={() => setDarkMode(!darkMode)}
-        className="mt-6 px-4 py-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
-      >
-        {darkMode ? "🌞 Switch to Light" : "🌙 Switch to Dark"}
-      </button>
-    </div>
-  )
+interface ConversionResult {
+  binary: string;
+  decimal: string;
+  hex: string;
+  steps: string[];
 }
 
-export default App
+function App() {
+  const [input, setInput] = useState("");
+  const [base, setBase] = useState("decimal");
+  const [result, setResult] = useState<ConversionResult | null>(null);
+
+  const handleConvert = async () => {
+    try {
+      const res = await axios.post("http://localhost:5000/api/convert", {
+        input,
+        base,
+      });
+      setResult(res.data);
+    } catch (err) {
+      alert("Conversion failed. Check input.");
+    }
+  };
+
+  return (
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Number Systems Converter</h1>
+
+      <input
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Enter number"
+        className="border p-2 mr-2"
+      />
+
+      <select
+        value={base}
+        onChange={(e) => setBase(e.target.value)}
+        className="border p-2 mr-2"
+      >
+        <option value="decimal">Decimal</option>
+        <option value="binary">Binary</option>
+        <option value="hex">Hexadecimal</option>
+      </select>
+
+      <button onClick={handleConvert} className="bg-blue-500 text-white p-2">
+        Convert
+      </button>
+
+      {result && (
+        <div className="mt-4 border p-4">
+          <p><strong>Binary:</strong> {result.binary}</p>
+          <p><strong>Decimal:</strong> {result.decimal}</p>
+          <p><strong>Hexadecimal:</strong> {result.hex}</p>
+          <div>
+            <strong>Steps:</strong>
+            <ul>
+              {result.steps.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default App;
